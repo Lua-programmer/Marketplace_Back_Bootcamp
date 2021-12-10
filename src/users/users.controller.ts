@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '@prisma/client';
+import { UserRole } from './enum/role.enum';
 
-@Controller('users')
+@Controller()
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private service: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Post('create-user')
+  createUser(@Body() data: CreateUserDto): Promise<User> {
+    delete data.passwordConfirmation;
+    return this.service.create(data, UserRole.USER);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Post('create-admin')
+  createAdmin(@Body() data: CreateUserDto): Promise<User> {
+    delete data.passwordConfirmation;
+    return this.service.create(data, UserRole.ADMIN);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get('find-all')
+  findMany() {
+    return this.service.findMany();
+  }
+
+  @Get('find/:id')
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    return;
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Delete('delete/:id')
+  deleteOne(@Param('id') id: string): Promise<{ message: string }> {
+    return this.service.deleteOne(id);
   }
 }
