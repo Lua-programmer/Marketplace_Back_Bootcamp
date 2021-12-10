@@ -29,6 +29,7 @@ export class CreateUserDto {
 
   @IsString()
   uf: string;
+  
   tel: string;
   image: string;
 }
