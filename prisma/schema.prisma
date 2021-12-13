@@ -47,3 +47,18 @@ model Category {
   image   String
   Product Product[]
 }
+
+model Company {
+  id        Int    @id @default(autoincrement())
+  name      String
+  image     String
+  address   String
+  city      String
+  uf        String
+  cep       String
+  country   String
+  telephone String
+  email     String
+  password  String
+  cnpj      String
+}
