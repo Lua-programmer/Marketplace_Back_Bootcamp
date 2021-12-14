@@ -14,7 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
 import { UserRole } from './enum/role.enum';
 
-@Controller()
+@Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
 

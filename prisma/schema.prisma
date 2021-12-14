@@ -58,7 +58,7 @@ model Company {
   cep       String
   country   String
   telephone String
-  email     String
+  email     String @unique
   password  String
   cnpj      String
 }
