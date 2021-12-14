@@ -1,5 +1,4 @@
 import { IsString, IsEmail, MinLength} from 'class-validator';
-
 export class CreateCompanyDto {
     @IsString()
     @IsEmail({}, { message: 'Please enter a valid email address.' })
