@@ -19,7 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/auth/role.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 
-@Controller()
+@Controller('users')
 export class UsersController {
     constructor(private service: UsersService) {}
 
