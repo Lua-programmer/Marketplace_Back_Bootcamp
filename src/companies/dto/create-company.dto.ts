@@ -1,18 +1,22 @@
-import { IsString, IsEmail, MinLength} from 'class-validator';
+import { IsString, IsEmail, MinLength, IsNotEmpty, Length} from 'class-validator';
 export class CreateCompanyDto {
     @IsString()
-    @IsEmail({}, { message: 'Please enter a valid email address.' })
+    @IsNotEmpty()
+    @IsEmail()
     email: string;
   
-    @IsString({ message: 'Enter a valid name.' })
+    @IsString()
+    @IsNotEmpty()
+    @Length(6,150)
     name: string;
   
-    @IsString({ message: 'Your password should be at least six characters' })
-    @MinLength(6)
+    @IsString()
+    @IsNotEmpty()
+    @Length(6,15)
     password: string;
   
-    @IsString({ message: 'Your password confirmation should be at least six characters' })
-    @MinLength(6)
+    @IsString()
+    @Length(6, 15)
     passwordConfirmation: string;
     cnpj: string;
   

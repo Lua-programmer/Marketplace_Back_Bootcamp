@@ -9,8 +9,7 @@ export class CompaniesController {
   constructor(private companiesService: CompaniesService) {}
 
   @Post('create-company')
-  createCompany(@Body() data: CreateCompanyDto): Promise<Company> {
-    delete data.passwordConfirmation;
+  create(@Body() data: CreateCompanyDto): Promise<Company> {
     return this.companiesService.create(data);
   }
 
