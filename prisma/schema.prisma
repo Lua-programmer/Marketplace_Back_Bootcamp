@@ -43,7 +43,24 @@ model Product {
 
 model Category {
   id      Int       @id @default(autoincrement())
-  name    String
+  name    String    @unique
   image   String
   Product Product[]
+}
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  cnpj      String   @unique
+  password  String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  address   String
+  city      String
+  cep       String
+  country   String
+  uf        String
+  tel       String
 }
