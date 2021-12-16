@@ -7,19 +7,17 @@ import {
     Param,
     Delete,
     UseGuards,
-    UnprocessableEntityException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '@prisma/client';
 import { UserRole } from './enum/role.enum';
-import { SimpleGuard } from 'src/auth/simple.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/auth/role.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 
-@Controller()
+@Controller('users')
 export class UsersController {
     constructor(private service: UsersService) {}
 
@@ -49,14 +47,15 @@ export class UsersController {
         return this.service.findOne(id);
     }
 
-    @UseGuards(AuthGuard())
     @Patch(':id')
+    @UseGuards(AuthGuard())
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
         return;
     }
 
-    @UseGuards(AuthGuard())
     @Delete('delete/:id')
+    @UseGuards(AuthGuard())
+    @Role(UserRole.ADMIN)
     deleteOne(@Param('id') id: string): Promise<{ message: string }> {
         return this.service.deleteOne(id);
     }
