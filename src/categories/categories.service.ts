@@ -17,7 +17,7 @@ export class CategoriesService {
   }
 
   async findAll(): Promise<Category[]>{
-    const category = await this.db.company.findMany();
+    const category = await this.db.category.findMany();
     return category;
   }
 

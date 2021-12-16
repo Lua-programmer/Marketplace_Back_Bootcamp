@@ -1,4 +1,4 @@
-export class CreateCompanyDto {
+export default class CreateCompanyDto {
     name: string;
     email: string;
     cnpj: string;
@@ -10,5 +10,5 @@ export class CreateCompanyDto {
     cep: string;
     country: string;
     uf: string;
-    tel: string
+    tel: string;
 }
