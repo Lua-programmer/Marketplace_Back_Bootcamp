@@ -1,3 +1,6 @@
+import { PrismaService } from 'src/prisma.service';
+import { CompaniesService } from './companies/companies.service';
+import { CompaniesController } from './companies/companies.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,7 +11,7 @@ import { CompaniesModule } from './companies/companies.module';
 import { CategoriesModule } from './categories/categories.module';
 @Module({
   imports: [UsersModule, AuthModule, ProductsModule, CompaniesModule, CategoriesModule],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CompaniesController],
+  providers: [AppService, CompaniesService, PrismaService],
 })
 export class AppModule {}

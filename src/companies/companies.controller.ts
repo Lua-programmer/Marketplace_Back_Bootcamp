@@ -1,13 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Company } from '@prisma/client';
-import { CreateCompanyDto } from './dto/create-company.dto';
+import CreateCompanyDto from './dto/create-company.dto';
+
 import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Controller('companies')
 export class CompaniesController {
   constructor(private companiesService: CompaniesService) {}
 
+  
   @Post('create-company')
   create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companiesService.create(createCompanyDto);
