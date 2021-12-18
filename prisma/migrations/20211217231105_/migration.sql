@@ -51,6 +51,7 @@ CREATE TABLE "Company" (
     "email" TEXT NOT NULL,
     "cnpj" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "passWordConfirmation" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -69,6 +70,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_cpf_key" ON "User"("cpf");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Company_email_key" ON "Company"("email");

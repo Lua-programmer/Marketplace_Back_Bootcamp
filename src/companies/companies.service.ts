@@ -17,7 +17,7 @@ export class CompaniesService {
     }
 
     const salt = 10;
-      const hashedPassword = await bcrypt.hash(data.password, salt);
+    const hashedPassword = await bcrypt.hash(data.password, salt);
 
     const company = await this.db.company.create({
       data: {

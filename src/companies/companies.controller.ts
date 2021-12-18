@@ -3,7 +3,6 @@ import { CompaniesService } from './companies.service';
 import { Company } from '@prisma/client';
 import CreateCompanyDto from './dto/create-company.dto';
 
-import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Controller('companies')
 export class CompaniesController {
@@ -11,13 +10,17 @@ export class CompaniesController {
 
   
   @Post('create-company')
-  create(@Body() createCompanyDto: CreateCompanyDto) {
+  create(@Body() createCompanyDto: CreateCompanyDto): Promise<Company> {
     return this.companiesService.create(createCompanyDto);
   }
 
   @Get('find-all')
-  findAll() {
-    return this.companiesService.findAll();
+  findAll(): Promise<Company[]> {
+    return newFunction();
+
+    function newFunction(): Promise<Company[]> {
+      return this.companiesService.findAll();
+    }
   }
 
   @Get('find/:id')
