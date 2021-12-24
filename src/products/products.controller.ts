@@ -28,8 +28,8 @@ export class ProductsController {
   //   return this.productsService.update(+id, updateProductDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.productsService.remove(+id);
-  // }
+  @Delete('remove/:id')
+  remove(@Param('id') id: number) {
+    return this.productsService.delete(+id);
+  }
 }

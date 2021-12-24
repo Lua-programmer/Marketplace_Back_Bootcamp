@@ -8,7 +8,7 @@ import {
     IsUrl,
 } from 'class-validator';
 
-export default class CreateCompanyDto {
+export class CreateCompanyDto {
     @IsString()
     @IsEmail({}, { message: 'Please enter a valid email address.' })
     email: string;

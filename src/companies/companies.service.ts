@@ -1,3 +1,4 @@
+import { UpdateCategoryDto } from './../categories/dto/update-category.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { Prisma, Company } from "@prisma/client";
@@ -51,11 +52,22 @@ export class CompaniesService {
     return company;
   }
 
-  // update(id: number, updateCompanyDto: UpdateCompanyDto) {
-  //   return `This action updates a #${id} company`;
-  // }
+  async update(id: number, data: UpdateCategoryDto):Promise<Company>{
+    const companyUpdated = await this.db.company.update({
+      data: data,
+      where: { id },
+    });
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} company`;
-  // }
+    return companyUpdated
+  }
+
+  async removeOne(id: number): Promise<{ message: string }> {
+    await this.db.company.delete({
+      where: { id },
+    });
+
+    return {
+      message: 'Company deleted successfully'
+    }
+  }
 }
