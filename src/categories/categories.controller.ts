@@ -18,18 +18,23 @@ export class CategoriesController {
     return this.categoriesService.findAll();
   }
 
+  // @Get('find/:id')
+  // findOne(@Param('id') id: number): Promise<Category> {
+  //   return this.categoriesService.findOne(+id);
+  // }
+
   @Get('find/:id')
-  findOne(@Param('id') id: number): Promise<Category> {
-    return this.categoriesService.findOne(+id);
+  findOne(@Param() { id }): Promise<Category> {
+    return this.categoriesService.findOne(+id)
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-  //   return this.categoriesService.update(+id, updateCategoryDto);
+  // @Patch('update/:id')
+  // update(@Param('id') { id }, @Body() data: UpdateCategoryDto):Promise<Category> {
+  //   return this.categoriesService.update(+id, data);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.categoriesService.remove(+id);
-  // }
+  @Delete('remove/:id')
+  remove(@Param('id') id:number ): Promise<Category> {
+    return this.categoriesService.remove(+id);
+  }
 }

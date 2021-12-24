@@ -7,5 +7,5 @@ export class CreateCategoryDto {
     @IsString()
     image: string;
 
-    product: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+    product: number[];
 }

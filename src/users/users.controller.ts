@@ -50,9 +50,9 @@ export class UsersController {
     }
 
     @UseGuards(AuthGuard())
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-        return;
+    @Patch('update/:id')
+    update(@Param('id') id: string, @Body() data: UpdateUserDto):Promise<User> {
+        return this.service.update(id, data)
     }
 
     @UseGuards(AuthGuard())

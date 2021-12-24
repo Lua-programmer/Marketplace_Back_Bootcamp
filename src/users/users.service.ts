@@ -56,8 +56,12 @@ export class UsersService {
         return user;
     }
 
-    update(id: number, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
+    async update(id: string, data:UpdateUserDto):Promise<User>{
+        const userUpdated = await this.db.user.update({
+            data: data,
+            where: { id }
+        });
+        return userUpdated;
     }
 
     async deleteOne(id: string): Promise<{ message: string }> {
