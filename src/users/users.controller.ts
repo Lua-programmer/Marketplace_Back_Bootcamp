@@ -30,7 +30,7 @@ export class UsersController {
     }
 
     @Role(UserRole.ADMIN)
-    // @UseGuards(AuthGuard(), RolesGuard)
+    @UseGuards(AuthGuard(), RolesGuard)
     @Post('create-admin')
     createAdmin(@Body() data: CreateUserDto): Promise<User> {
         delete data.passwordConfirmation;
