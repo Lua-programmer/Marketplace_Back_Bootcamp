@@ -43,24 +43,27 @@ export class UsersService {
         return newUser;
     }
 
-    async findOne(id: string): Promise<User> {
+    async findOne(id: number): Promise<User> {
         const user = await this.db.user.findUnique({
             where: { id },
         });
 
         if (!user) {
-            throw new NotFoundException('Id not found.');
+            throw new NotFoundException('ID not found.');
         }
 
         delete user.password;
         return user;
     }
 
-    update(id: number, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
+    async update(id: number, updateUserDto: UpdateUserDto) {
+        await this.db.user.update({
+            where: { id: id },
+            data: updateUserDto,
+        });
     }
 
-    async deleteOne(id: string): Promise<{ message: string }> {
+    async deleteOne(id: number): Promise<{ message: string }> {
         await this.db.user.delete({
             where: { id },
         });

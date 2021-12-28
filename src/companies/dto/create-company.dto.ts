@@ -1,4 +1,4 @@
-export default class CreateCompanyDto {
+export class CreateCompanyDto {
     name: string;
     email: string;
     cnpj: string;

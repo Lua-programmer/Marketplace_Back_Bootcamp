@@ -1,61 +1,70 @@
 import { PrismaService } from 'src/prisma.service';
-import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
-import { Prisma, Company } from "@prisma/client";
+import {
+    Injectable,
+    ConflictException,
+    UnauthorizedException,
+    NotFoundException,
+} from '@nestjs/common';
+import { Prisma, Company } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class CompaniesService {
-  constructor(private db: PrismaService){}
+    constructor(private db: PrismaService) {}
 
-  async create(data: Prisma.CompanyCreateInput ): Promise<Company> {
-    const companyExists = await this.db.company.findUnique({
-      where: { email: data.email},
-    });
+    async create(data: Prisma.CompanyCreateInput): Promise<Company> {
+        const companyExists = await this.db.company.findUnique({
+            where: { email: data.email },
+        });
 
-    if (companyExists){
-      throw new ConflictException('E-mail already registered')
+        if (companyExists) {
+            throw new ConflictException('E-mail already registered');
+        }
+
+        const salt = 10;
+        const hashedPassword = await bcrypt.hash(data.password, salt);
+
+        const company = await this.db.company.create({
+            data: {
+                ...data,
+                password: hashedPassword,
+            },
+        });
+
+        delete company.password;
+        return company;
     }
 
-    const salt = 10;
-      const hashedPassword = await bcrypt.hash(data.password, salt);
+    async findAll() {
+        const company = await this.db.company.findMany();
+        const newCompany = company.map(({ password, ...rest }) => rest);
 
-    const company = await this.db.company.create({
-      data: {
-        ...data,
-        password: hashedPassword
-      }
-    });
-
-    delete company.password;
-    return company;
-  }
-
-  async findAll(){
-    const company = await this.db.company.findMany();
-    const newCompany = company.map(({password, ...rest}) => rest);
-
-    return newCompany;
-  }
-
-  async findOne(id: number): Promise<Company> {
-    const company = await this.db.company.findUnique({
-      where: { id },
-
-    });
-
-    if (!company) {
-      throw new NotFoundException('ID not found');
+        return newCompany;
     }
 
-    delete company.password;
-    return company;
-  }
+    async findOne(id: number): Promise<Company> {
+        const company = await this.db.company.findUnique({
+            where: { id },
+        });
 
-  // update(id: number, updateCompanyDto: UpdateCompanyDto) {
-  //   return `This action updates a #${id} company`;
-  // }
+        if (!company) {
+            throw new NotFoundException('ID not found');
+        }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} company`;
-  // }
+        delete company.password;
+        return company;
+    }
+
+    // update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    //   return `This action updates a #${id} company`;
+    // }
+
+    async deleteOne(id: number): Promise<{ message: string }> {
+        await this.db.company.delete({
+            where: { id },
+        });
+        return {
+            message: 'Company deleted successfully',
+        };
+    }
 }
