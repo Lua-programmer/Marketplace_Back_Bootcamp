@@ -11,39 +11,15 @@ import { PrismaClientKnownRequestError, PrismaClientRustPanicError } from '@pris
 export class CategoriesService {
   constructor(private db: PrismaService) {}
 
-  // private readonly _include = {
-  //   product: {
-  //     select: {
-  //       categories: true
-  //     }
-  //   }
-  // }
-
   async create(data: CreateCategoryDto):Promise<Category> {
     return await this.db.category.create({
       data: data,
     });
   }
 
-  // async create(data: Prisma.CategoryCreateInput) {
-  //   const category = await this.db.category.create({
-  //     data,
-  //     include: this._include
-  //   });
-    
-  //   return category;
-  // }
-
   async findAll(): Promise<Category[]> {
     return this.db.category.findMany();
   }
-
-  // async findAll(): Promise<Category[]>{
-  //   const category = await this.db.category.findMany({
-  //     include: this._include
-  //   });
-  //   return category;
-  // }
 
   async findOne(id: number) {
     const category = await this.db.category.findUnique({
@@ -59,26 +35,14 @@ export class CategoriesService {
     return category;
   }
 
-  // async findOne(id: number): Promise<Category> {
-  //   const category = await this.db.category.findUnique({
-  //     where: { id },
-  //     include: this._include 
-  //   });
-
-  //   if (!category) {
-  //     throw new NotFoundException('ID not found');
-  //   }
-
-  //   return category;
-  // }
-
-  // async update(id: number, data:UpdateCategoryDto): Promise<Category> {
-  //   const categoryUpdated = await this.db.category.update({
-  //     data: data,
-  //     where: { id },
-  //   });
-  //   return categoryUpdated;
-  // }
+  async update(id:number, data:Prisma.CategoryUpdateInput): Promise<Category> {
+    const categoryUpdated = await this.db.category.update({
+        data: data,
+        where: { id },
+    });
+    
+    return categoryUpdated;
+  }
 
   async remove(id: number) {
     try {
