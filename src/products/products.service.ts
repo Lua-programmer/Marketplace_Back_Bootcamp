@@ -30,14 +30,6 @@ export class ProductsService {
         });
     }
 
-    // async create(data: Prisma.ProductCreateInput) {
-    //   const product = await this.db.product.create({
-    //     data,
-    //   });
-
-    //   return product;
-    // }
-
     async findAll(): Promise<Product[]> {
         const product = await this.db.product.findMany();
         return product;
@@ -55,14 +47,14 @@ export class ProductsService {
         return product;
     }
 
-    // async update(id: number, data:UpdateProductDto):Promise<Product>{
-    //   const productUpdated = await this.db.product.update({
-    //       data: data,
-    //       where: { id:id },
-    //   });
+    async update(id: number, data:Prisma.ProductUpdateInput):Promise<Product>{
+      const productUpdated = await this.db.product.update({
+          data: data,
+          where: { id:id },
+      });
 
-    //   return productUpdated;
-    // }
+      return productUpdated;
+    }
 
     async delete(id: number): Promise<{ message: string }> {
         const productExists = await this.db.product.findUnique({

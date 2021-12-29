@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { PartialType } from '@nestjs/mapped-types';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { CreateCategoryDto } from './create-category.dto';
