@@ -45,19 +45,19 @@ export class UsersController {
 
     @UseGuards(AuthGuard())
     @Get('find/:id')
-    findOne(@Param('id') id: number): Promise<User> {
+    findOne(@Param('id') id: string): Promise<User> {
         return this.service.findOne(id);
     }
 
     @UseGuards(AuthGuard())
     @Patch('update/:id')
-    update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
         return this.service.update({ id, updateUserDto });
     }
 
     @UseGuards(AuthGuard())
     @Delete('delete/:id')
-    deleteOne(@Param('id') id: number): Promise<{ message: string }> {
+    deleteOne(@Param('id') id: string): Promise<{ message: string }> {
         return this.service.deleteOne(id);
     }
 }
