@@ -56,7 +56,7 @@ export class UsersService {
         return user;
     }
 
-    async update(id: string, updateUserDto:UpdateUserDto) {
+    async update({ id, updateUserDto }: { id: string; updateUserDto: UpdateUserDto; }): Promise<User> {
         const userUpdated = await this.db.user.update({
             data: updateUserDto,
             where: { id: id },

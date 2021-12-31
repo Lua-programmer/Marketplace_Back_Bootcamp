@@ -52,7 +52,7 @@ export class UsersController {
     @UseGuards(AuthGuard())
     @Patch('update/:id')
     update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-        return this.service.update(id, updateUserDto);
+        return this.service.update({ id, updateUserDto });
     }
 
     @UseGuards(AuthGuard())
