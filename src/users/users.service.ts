@@ -43,7 +43,7 @@ export class UsersService {
         return newUser;
     }
 
-    async findOne(id: number): Promise<User> {
+    async findOne(id: string): Promise<User> {
         const user = await this.db.user.findUnique({
             where: { id },
         });
@@ -56,7 +56,7 @@ export class UsersService {
         return user;
     }
 
-    async update(id: number, updateUserDto:UpdateUserDto) {
+    async update(id: string, updateUserDto:UpdateUserDto) {
         const userUpdated = await this.db.user.update({
             data: updateUserDto,
             where: { id: id },
@@ -64,7 +64,7 @@ export class UsersService {
         return userUpdated;
     }
 
-    async deleteOne(id: number): Promise<{ message: string }> {
+    async deleteOne(id: string): Promise<{ message: string }> {
         await this.db.user.delete({
             where: { id: id },
         });
