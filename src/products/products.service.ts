@@ -1,3 +1,5 @@
+import { Company } from './../companies/entities/company.entity';
+import { Category } from './../categories/entities/category.entity';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -10,34 +12,37 @@ export class ProductsService {
     constructor(private db: PrismaService) {}
 
     async create(data: CreateProductDto): Promise<Product> {
-        const categories = data.category.map(category => ({
-            id: category,
-        }));
+        // const newCategories = data.category.map(category => ({
+        //     id: category,
+        // }));
 
-        return await this.db.product.create({
+        
+        const product = await this.db.product.create({
             data: {
-                name: data.name,
-                price: data.price,
-                description: data.description,
-                image: data.image,
-                category: {
-                    connect: categories,
-                },
+                ...data,
             },
-            include: {
-                category: true,
-            },
+            
         });
+
+        return product;
     }
 
     async findAll(): Promise<Product[]> {
+        
         const product = await this.db.product.findMany();
+
         return product;
+        
     }
 
     async findOne(id: number): Promise<Product> {
         const product = await this.db.product.findUnique({
-            where: { id },
+            where: { 
+                id 
+            },
+            include: {
+                categories:true,
+            },
         });
 
         if (!product) {
@@ -50,7 +55,7 @@ export class ProductsService {
     async update(id: number, data:Prisma.ProductUpdateInput):Promise<Product>{
       const productUpdated = await this.db.product.update({
           data: data,
-          where: { id:id },
+          where: { id : id },
       });
 
       return productUpdated;

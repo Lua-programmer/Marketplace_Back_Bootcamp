@@ -1,3 +1,4 @@
+import { Product } from './../../products/entities/product.entity';
 import {
     IsString,
     MinLength,
@@ -6,6 +7,8 @@ import {
     IsPhoneNumber,
     IsNumberString,
     IsUrl,
+    IsNumber,
+    IsOptional,
 } from 'class-validator';
 
 export class CreateCompanyDto {
@@ -52,5 +55,9 @@ export class CreateCompanyDto {
     @IsUrl()
     @IsNotEmpty()
     image: string;
+
+    @IsOptional()
+    @IsNumber({}, { each: true })
+    products: number[];
 }
 

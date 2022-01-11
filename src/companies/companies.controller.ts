@@ -10,13 +10,13 @@ export class CompaniesController {
 
   
   @Post('create-company')
-  create(@Body() createCompanyDto: CreateCompanyDto): Promise<Company> {
-    delete createCompanyDto.passwordConfirmation
-    return this.companiesService.create(createCompanyDto);
+  create(@Body() data: CreateCompanyDto): Promise<Company> {
+    delete data.passwordConfirmation
+    return this.companiesService.create(data);
   }
 
   @Get('find-all')
-  findAll() {
+  findAll(): Promise<{ id: number; name: string; email: string; cnpj: string; image: string; createdAt: Date; updatedAt: Date; address: string; city: string; cep: string; country: string; uf: string; tel: string; }[]> {
     return this.companiesService.findAll();
   }
 

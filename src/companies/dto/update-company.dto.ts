@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsEmail, IsNotEmpty, IsNumberString, IsString, IsUrl, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, IsUrl, MinLength } from 'class-validator';
 import { CreateCompanyDto } from './create-company.dto';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
@@ -46,4 +46,8 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
     @IsUrl()
     @IsNotEmpty()
     image: string;
+
+    @IsOptional()
+    @IsNumber({}, { each: true })
+    products: number[];
 }

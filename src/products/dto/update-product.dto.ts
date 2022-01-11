@@ -18,4 +18,6 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     @IsOptional()
     @IsNumber({}, { each: true })
     category: number[];
+
+    company: number[];
 }

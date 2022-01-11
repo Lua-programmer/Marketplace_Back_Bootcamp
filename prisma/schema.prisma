@@ -8,22 +8,25 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
-  cpf       String   @unique
+  email     String    @unique
+  cpf       String    @unique
   password  String
   image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  role      Role     @default(USER)
-  status    Boolean  @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  role      Role      @default(USER)
+  status    Boolean   @default(true)
   address   String
   city      String
   cep       String
   country   String
   uf        String
   tel       String
+  products  Product[]
+  wishlist  WishList?
+  cart      Cart?
 }
 
 enum Role {
@@ -37,29 +40,52 @@ model Product {
   price       String
   description String
   image       String
-  category    Category[]
+  categories  Category[] 
+  company     Company?   @relation(fields: [companyId], references: [id])
+  companyId   Int?
+  wishlist    WishList?  @relation(fields: [wishListId], references: [id])
+  wishListId  Int?
+  cart        Cart?      @relation(fields: [cartId], references: [id])
+  cartId      Int?
+  owner       User?      @relation(fields: [ownerId], references: [id])
+  ownerId     Int?
 }
 
 model Category {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique
-  image   String
-  product Product[]
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  image    String
+  products Product[]
 }
 
 model Company {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
-  cnpj      String   @unique
+  email     String    @unique
+  cnpj      String    @unique
   password  String
   image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   address   String
   city      String
   cep       String
   country   String
   uf        String
   tel       String
+  products  Product[]
+}
+
+model WishList {
+  id       Int       @id @default(autoincrement())
+  owner    User?     @relation(fields: [ownerId], references: [id])
+  ownerId  Int?      @unique
+  products Product[]
+}
+
+model Cart {
+  id       Int       @id @default(autoincrement())
+  owner    User?     @relation(fields: [ownerId], references: [id])
+  ownerId  Int?      @unique
+  products Product[]
 }
