@@ -17,5 +17,5 @@ export class CreateProductDto {
     @IsNumber({}, { each: true })
     category: number[];
 
-    company: number[];
+    company: string[];
 }

@@ -40,8 +40,8 @@ model Product {
   price       String
   description String
   image       String
-  categories  Category[] 
-  company     Company?   @relation(fields: [companyId], references: [id])
+  categories  Category[]
+  company     Company[]  @relation(fields: [companyId], references: [id])
   companyId   Int?
   wishlist    WishList?  @relation(fields: [wishListId], references: [id])
   wishListId  Int?

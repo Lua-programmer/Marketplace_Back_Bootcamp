@@ -38,7 +38,8 @@ export class ProductsService {
     async findOne(id: number): Promise<Product> {
         const product = await this.db.product.findUnique({
             where: { 
-                id 
+                id : id,
+                
             },
             include: {
                 categories:true,
