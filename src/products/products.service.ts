@@ -39,10 +39,10 @@ export class ProductsService {
         const product = await this.db.product.findUnique({
             where: { 
                 id : id,
-                
             },
             include: {
                 categories:true,
+                company: true
             },
         });
 

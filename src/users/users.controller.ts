@@ -30,32 +30,32 @@ export class UsersController {
     }
 
     @Role(UserRole.ADMIN)
-    @UseGuards(AuthGuard(), RolesGuard)
+    //@UseGuards(AuthGuard(), RolesGuard)
     @Post('create-admin')
     createAdmin(@Body() data: CreateUserDto): Promise<User> {
         delete data.passwordConfirmation;
         return this.service.create({ data, role: UserRole.ADMIN });
     }
 
-    @UseGuards(AuthGuard())
+    //@UseGuards(AuthGuard())
     @Get('find-all')
     findMany() {
         return this.service.findMany();
     }
 
-    @UseGuards(AuthGuard())
+    //@UseGuards(AuthGuard())
     @Get('find/:id')
     findOne(@Param('id') id: number): Promise<User> {
         return this.service.findOne(id);
     }
 
-    @UseGuards(AuthGuard())
+    //@UseGuards(AuthGuard())
     @Patch('update/:id')
     update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
         return this.service.update({ id, updateUserDto });
     }
 
-    @UseGuards(AuthGuard())
+    //@UseGuards(AuthGuard())
     @Delete('delete/:id')
     deleteOne(@Param('id') id: number): Promise<{ message: string }> {
         return this.service.deleteOne(id);
