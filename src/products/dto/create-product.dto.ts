@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
-import { Category, Prisma } from "@prisma/client"
+
 export class CreateProductDto {
     @IsString()
     name: string;
@@ -16,4 +16,6 @@ export class CreateProductDto {
     @IsOptional()
     @IsNumber({}, { each: true })
     category: number[];
+
+    company: number[];
 }

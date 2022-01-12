@@ -1,12 +1,13 @@
+import { Product } from './../../products/entities/product.entity';
 import {
     IsString,
     MinLength,
     IsEmail,
     IsNotEmpty,
-    IsPhoneNumber,
     IsNumberString,
     IsUrl,
 } from 'class-validator';
+import { Cart, WishList } from '@prisma/client';
 
 export class CreateUserDto {
     @IsString()
@@ -52,4 +53,8 @@ export class CreateUserDto {
     @IsUrl()
     @IsNotEmpty()
     image: string;
+
+    products: Product[];
+    wishlist: WishList;
+    cart: Cart;
 }

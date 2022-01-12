@@ -1,3 +1,4 @@
+import { CreateUserDto } from './dto/create-user.dto';
 import {
     Injectable,
     ConflictException,
@@ -13,7 +14,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(private db: PrismaService) {}
 
-    async create(data: Prisma.UserCreateInput, role: UserRole): Promise<User> {
+    async create({ data, role }: { data: CreateUserDto; role: UserRole; }): Promise<User> {
         const userExists = await this.db.user.findUnique({
             where: { email: data.email },
         });
@@ -43,7 +44,7 @@ export class UsersService {
         return newUser;
     }
 
-    async findOne(id: string): Promise<User> {
+    async findOne(id: number): Promise<User> {
         const user = await this.db.user.findUnique({
             where: { id },
         });
@@ -56,7 +57,7 @@ export class UsersService {
         return user;
     }
 
-    async update({ id, updateUserDto }: { id: string; updateUserDto: UpdateUserDto; }): Promise<User> {
+    async update({ id, updateUserDto }: { id: number; updateUserDto: UpdateUserDto; }): Promise<User> {
         const userUpdated = await this.db.user.update({
             data: updateUserDto,
             where: { id: id },
@@ -64,7 +65,7 @@ export class UsersService {
         return userUpdated;
     }
 
-    async deleteOne(id: string): Promise<{ message: string }> {
+    async deleteOne(id: number): Promise<{ message: string }> {
         await this.db.user.delete({
             where: { id: id },
         });

@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, Category } from '@prisma/client';
-import { PrismaClientKnownRequestError, PrismaClientRustPanicError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError} from '@prisma/client/runtime';
 
 
 
@@ -25,6 +25,9 @@ export class CategoriesService {
     const category = await this.db.category.findUnique({
       where: {
         id,
+      },
+      include: {
+        products: true,
       },
     });
 

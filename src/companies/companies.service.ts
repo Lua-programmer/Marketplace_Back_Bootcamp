@@ -1,14 +1,20 @@
+import { CreateProductDto } from './../products/dto/create-product.dto';
+import { Product } from './../products/entities/product.entity';
 import { UpdateCategoryDto } from './../categories/dto/update-category.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { Prisma, Company } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
+import { CreateCompanyDto } from "./dto/create-company.dto"
 import * as bcrypt from 'bcrypt';
+import { domainToASCII } from 'url';
 
 @Injectable()
 export class CompaniesService {
   constructor(private db: PrismaService){}
 
-  async create(data: Prisma.CompanyCreateInput ): Promise<Company> {
+  async create(data: CreateCompanyDto): Promise<Company> {
+
     const companyExists = await this.db.company.findUnique({
       where: { email: data.email},
     });
@@ -23,9 +29,9 @@ export class CompaniesService {
     const company = await this.db.company.create({
       data: {
         ...data,
-        password: hashedPassword
-      }
-    });
+        password: hashedPassword,
+      },
+    })
 
     delete company.password;
     return company;
@@ -40,7 +46,12 @@ export class CompaniesService {
 
   async findOne(id: number): Promise<Company> {
     const company = await this.db.company.findUnique({
-      where: { id },
+      where: { 
+        id 
+      },
+      include: {
+        products: true
+      },
 
     });
 
